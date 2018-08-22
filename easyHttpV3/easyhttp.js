@@ -1,57 +1,45 @@
 /**
- * Easy Http v2.0
+ * Easy Http v3.0
  * Library for http request
- * @version : 2.0
+ * @version : 3.0
  * @author : Mohamed A. Abdisamad
  */
 class easyHttp {
   /** Get Http Request */
-  get(url) {
-    return new Promise((resolve, reject) => {
-      fetch(url)
-        .then(res => res.json())
-        .then(data => resolve(data))
-        .catch(err => reject(err));
-    });
+  async get(url) {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
   }
   /** POST Http Request */
-  post(url, data) {
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(res => res.json())
-        .then(data => resolve(data))
-        .catch(err => reject(err));
+  async post(url, data) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
+    const response = await res.json();
+    return response;
   }
 
   /** PUT Http Request */
-  put(url, data) {
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(response => response.json())
-        .then(data => resolve(data))
-        .then(err => reject(err));
+  async put(url, data) {
+    const prep = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
+    const response = await prep.json();
+    return response;
   }
   /** PUT Http Request */
-  delete(url) {
-    return new Promise((resolve, reject) => {
-      fetch(url)
-        .then(res => res.json())
-        .then(() => resolve('user Deleted'))
-        .catch(err => reject(err));
-    });
+  async delete(url) {
+    const prep = await fetch(url);
+    const data = await prep.json();
+    return 'User Deleted';
   }
 }
